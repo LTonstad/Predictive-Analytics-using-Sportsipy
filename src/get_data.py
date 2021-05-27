@@ -11,13 +11,14 @@ from sportsreference.nfl.schedule import Schedule
 from sportsreference.nfl.teams import Teams
 
 # helper function to get player age during each season.
-def get_age(year, bd):
-    if year[0] == "Career":
-        return None
-    else:
-        year_dt = datetime(int(year[0][0:4]) + 1, 1, 1)
-        age_years = relativedelta(year_dt, bd).years + relativedelta(year_dt, bd).months/12
-        return age_years
+def get_age(player_df):
+    age_lst = []
+    for year, bd in zip(player_df.index, player_df['birth_date']):
+        if year[0] == "Career":
+            age_lst.append(age_lst[-1])
+        else:
+            age_lst.append(int(float(year[0])) - int(float(bd[0:4])))
+    return age_lst
     
 # helper function to get year for each row and denote
 # rows that contain career totals.
@@ -34,33 +35,16 @@ def get_year(ix):
 def get_player_df(player):
     # get player df and add some extra info
     player_df = player.dataframe
+    if player_df is None:
+        print(f'Unable to find {player}')
+        return None
     player_df['birth_date'] = player.birth_date
     player_df['player_id'] = player.player_id
     player_df['name'] = player.name
     player_df['year'] = [get_year(ix) for ix in player_df.index]
     player_df['id'] = [player_id + ' ' + year for player_id, year in zip(player_df['player_id'], player_df['year'])]
-    player_df['age'] = [get_age(year, bd) for year, bd in zip(player_df.index, player_df['birth_date'])]
-    
-    # Stuff I've added
-    years_played = list(filter(lambda x: x != 'Career', player_df.salary.reset_index().iloc[:,0].to_list()))
-    player_df['avg_salary'] = player_df.salary / len(years_played)
-    player_df['years_played'] = len(years_played)
-    player_df['year_list'] = str(years_played)
-    player_df['current_player'] = player_df['year_list'].str.contains('2020-21')
-
-    if (player_df['current_player']).any():
-        salary = player.contract
-        if salary != None:
-            sal_nums = [str(x).replace(',','').replace('$','') for x in list(salary.values())]
-            contract_total = np.sum([int(x) for x in sal_nums])
-            player_df['contract_total'] = contract_total
-            player_df['contract_length'] = len(sal_nums)
-            player_df['current_salary'] = sal_nums[0]
-            player_df['current_avg_salary'] = contract_total / len(sal_nums)
-            player_df['current_team'] = player._team_abbreviation[-2]
-
-    player_df.set_index('id', drop = True, inplace = True)
-    
+    player_df['age'] = get_age(player_df)
+    player_df['years_played'] = [x for x in range(player_df.shape[0])]
     return player_df
 
 
