@@ -16,7 +16,7 @@ Since this project is still in early stages this README is mostly just for notes
 ## Getting Player Dataframes
 
 * Goals:
-  > * Use multi-indexing for identifying characteristics like Name, `Position`, `Team`, `Player_id`, `Current_age`
+  > * Use multi-indexing for identifying characteristics like `Name`, `Position`, `Team`, `Player_id`, `Current_age`
   > * Figure out a way to identify if player is starter, 2nd string etc.
   > * Figure out a way to project injury proneness
   > * Create offensive/defensive player column

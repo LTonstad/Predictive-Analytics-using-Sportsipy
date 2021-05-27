@@ -16,36 +16,45 @@ def get_age(player_df):
     for year, bd in zip(player_df.index, player_df['birth_date']):
         if year[0] == "Career":
             age_lst.append(age_lst[-1])
+        elif year[0] == '':
+            age_lst.append(np.nan)
         else:
             age_lst.append(int(float(year[0])) - int(float(bd[0:4])))
     return age_lst
     
-# helper function to get year for each row and denote
-# rows that contain career totals.
-def get_year(ix):
-    if ix[0] == "Career":
-        return "Career"
-    elif ix[0] == "1999-00":
-        return "2000"
-    else:
-        return ix[0][0:2] + ix[0][-2:]
 
 # Function to get player info from Player class object.def get_player_df(player):
-
 def get_player_df(player):
-    # get player df and add some extra info
+    # get player df and verify that a DataFrame was actually created, if not return None
     player_df = player.dataframe
     if player_df is None:
         print(f'Unable to find {player}')
         return None
-    player_df['birth_date'] = player.birth_date
-    player_df['player_id'] = player.player_id
-    player_df['name'] = player.name
-    player_df['year'] = [get_year(ix) for ix in player_df.index]
-    player_df['id'] = [player_id + ' ' + year for player_id, year in zip(player_df['player_id'], player_df['year'])]
+    
+    # Getting extra information including age, years_played
     player_df['age'] = get_age(player_df)
     player_df['years_played'] = [x for x in range(player_df.shape[0])]
-    return player_df
+
+    # Modifying column to verify that all positions are listed in upper case letters
+    player_df['position'] = player_df['position'].str.upper()
+
+    # Resetting index in preperation for returning career and season DataFrames
+    player_df = player_df.reset_index()
+    player_df.rename(columns={'level_0':'year'},inplace=True)
+
+    # Creating two DataFrames, one for season by season stats, one for career stats
+    career = player_df[player_df['year'] == 'Career']
+    seasons = player_df[player_df['year'] != 'Career']
+
+    # Adding lists of different positions & teams played for to the Career row for the career DF
+    career['position'] = list(filter(None, list(player_df['position'].unique())))
+    career['team_abbreviation'] = list(filter(None, list(player_df['team_abbreviation'].unique())))
+
+    # Setting up DataFrame to have Multi-Index so that manipulating DataFrame doesn't get rid of a columns unique identifiers
+    seasons.set_index(['name', 'player_id', 'position', 'team_abbreviation', 'age', 'year'], inplace=True)
+    career.set_index(['name', 'player_id', 'position', 'team_abbreviation', 'age', 'year'], inplace=True)
+    
+    return player_df, career
 
 
 # initialize a list of players that we have pulled data for
@@ -53,7 +62,10 @@ players_collected = []
 season_df_init = 0
 career_df_init = 0
 season_df = 0
-career_df = 0# iterate through years.
+career_df = 0 
+empty_player_df = []
+
+# iterate through years.
 for year in range(2020, 1999, -1):
     print('\n' + str(year))
         
@@ -70,11 +82,14 @@ for year in range(2020, 1999, -1):
             if player_id not in players_collected:
                 
                 player = Player(player_id)
-                player_info = get_player_df(player)
-                player_seasons = player_info[
-                                 player_info['year'] != "Career"]
-                player_career = player_info[
-                                player_info['year'] == "Career"]
+
+                # Check to verify that the DataFrame exists, else move to next player
+                if player.dataframe is None:
+                    empty_player_df.append(player_id)
+                    continue
+
+                # Getting season & career dataframes
+                player_seasons, player_career = get_player_df(player)
                 
                 # create season_df if not initialized
                 if not season_df_init:
@@ -99,5 +114,5 @@ for year in range(2020, 1999, -1):
                 players_collected.append(player_id)
                 print(player.name)
 
-season_df.to_csv('../data/nfl_player_stats_by_season.csv')
-career_df.to_csv('../data/nfl_player_stats_by_career.csv')
+season_df.to_pickle('../data/nfl_player_stats_by_season.pkl')
+career_df.to_pickle('../data/nfl_player_stats_by_career.pkl')
