@@ -278,3 +278,5 @@ gnb_players = green_bay.players
 
 * Get weather report as function for upcoming games during season
 * Get coach dataframes and factor those into algorythim
+  * [Open Weather Map](https://openweathermap.org/history)
+* [ESPN API](http://www.espn.com/apis/devcenter/docs/) for things like images and rankings etc.
