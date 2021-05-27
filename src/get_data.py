@@ -54,7 +54,7 @@ def get_player_df(player):
     seasons.set_index(['name', 'player_id', 'position', 'team_abbreviation', 'age', 'year'], inplace=True)
     career.set_index(['name', 'player_id', 'position', 'team_abbreviation', 'age', 'year'], inplace=True)
     
-    return player_df, career
+    return seasons, career
 
 
 # initialize a list of players that we have pulled data for
