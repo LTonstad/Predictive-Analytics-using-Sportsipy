@@ -4,7 +4,7 @@ Since this project is still in early stages this README is mostly just for notes
 
 ## Current Objectives
 
-* Get player information
+* Data Cleaning, creating functions to seperate poisitons and minimize included features based on the positions
 * Doesn't appear to be a way to get current seasons schedule, only allows for schedule of already played seasons
 
 ## Current Issues
