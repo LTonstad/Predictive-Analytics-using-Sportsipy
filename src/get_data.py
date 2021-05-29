@@ -47,8 +47,21 @@ def get_player_df(player):
     seasons = player_df[player_df['year'] != 'Career']
 
     # Adding lists of different positions & teams played for to the Career row for the career DF
-    career['position'] = list(filter(None, list(player_df['position'].unique())))
-    career['team_abbreviation'] = list(filter(None, list(player_df['team_abbreviation'].unique())))
+    positions = list(filter(None, list(player_df['position'].unique())))
+    if len(positions) > 1:
+        career['position'] = ' '.join(positions)
+    elif len(positions) == 0:
+        career['position'] = np.nan
+    else:
+        career['position'] = positions[0]
+        
+    team_abbreviations = list(filter(None, list(player_df['team_abbreviation'].unique())))
+    if len(team_abbreviations) > 1:
+        career['team_abbreviation'] = ' '.join(team_abbreviations)
+    elif len(positions) == 0:
+        career['position'] = np.nan
+    else:
+        career['team_abbreviation'] = team_abbreviations[0]
 
     # Setting up DataFrame to have Multi-Index so that manipulating DataFrame doesn't get rid of a columns unique identifiers
     seasons.set_index(['name', 'player_id', 'position', 'team_abbreviation', 'age', 'year'], inplace=True)
@@ -57,7 +70,7 @@ def get_player_df(player):
     return seasons, career
 
 
-# initialize a list of players that we have pulled data for
+''' # initialize a list of players that we have pulled data for
 players_collected = []
 season_df_init = 0
 career_df_init = 0
@@ -115,4 +128,4 @@ for year in range(2020, 1999, -1):
                 print(player.name)
 
 season_df.to_pickle('../data/nfl_player_stats_by_season.pkl')
-career_df.to_pickle('../data/nfl_player_stats_by_career.pkl')
+career_df.to_pickle('../data/nfl_player_stats_by_career.pkl') '''
