@@ -23,6 +23,9 @@ defensive_positions = ['LCB', 'SS', 'FS', 'RILB', 'RLB', 'MLB', 'NT', 'LDT', 'RD
 special_teams_positions = ['K', 'P']
 no_position = ['nan', '']
 
+# Numeric columns
+numerics = []
+
 # Removes Slashes that exist in position column
 def remove_slash(series):
     modified_df = series.copy()
