@@ -9,9 +9,9 @@ Since this project is still in early stages this README is mostly just for notes
 
 ## Current Issues
 
-* Getting error when trying to use `get_age` function
-
-    `TypeError: relativedelta only diffs datetime/date`
+* Many players have no position listed, need to create functions that fill those positions
+  * ~~Main issues include `kickers` and `punters`~~
+  * Still 14,111 players without positions
 
 ## Getting Player Dataframes
 

@@ -70,20 +70,6 @@ def get_player_df(player):
     return seasons, career
 
 
-# Removes Slashes that exist in position column
-
-def remove_slash(series):
-    modified_df = series.copy()
-    for idx, pos in enumerate(series):
-        if len(str(pos)) <= 0:
-            continue
-        elif str(pos)[0] == '/':
-            modified_df[idx] = str(pos)[1:]
-        else:
-            modified_df[idx] = str(pos)
-    return modified_df
-# df['position'] = remove_slash(df['position'])
-
 ''' # initialize a list of players that we have pulled data for
 players_collected = []
 season_df_init = 0
