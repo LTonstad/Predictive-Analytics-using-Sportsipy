@@ -23,28 +23,3 @@ defensive_positions = ['LCB', 'SS', 'FS', 'RILB', 'RLB', 'MLB', 'NT', 'LDT', 'RD
 special_teams_positions = ['K', 'P']
 no_position = ['nan', '']
 
-# Numeric columns
-numerics = []
-
-# Removes Slashes that exist in position column
-def remove_slash(series):
-    modified_df = series.copy()
-    for idx, pos in enumerate(series):
-        if len(str(pos)) <= 0:
-            continue
-        elif str(pos)[0] == '/':
-            modified_df[idx] = str(pos)[1:]
-        else:
-            modified_df[idx] = str(pos)
-    return modified_df
-
-# Function to find Nonetypes and update column to 0's as an int
-def update_num_column(df, col):
-    for idx, pos in enumerate(df[col]):
-        if pos is None:
-            print(idx, '    ', pos, '    ', type(pos), '    ', df[col][idx])
-            df[col][idx] = np.nan
-        
-    df[col] = df[col].fillna(0)
-    df[col] = df[col].astype('int64')
-

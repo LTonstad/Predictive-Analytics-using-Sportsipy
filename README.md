@@ -5,13 +5,30 @@ Since this project is still in early stages this README is mostly just for notes
 ## Current Objectives
 
 * Data Cleaning, creating functions to seperate poisitons and minimize included features based on the positions
+  * May be helpful to identify certain features that are going to be important to sort by
 * Doesn't appear to be a way to get current seasons schedule, only allows for schedule of already played seasons
+* Need to get a DataFrame of all boxcores for each team throughout the last 10 years
 
-## Current Issues
+## Current Solvable Issues
 
 * Many players have no position listed, need to create functions that fill those positions
   * ~~Main issues include `kickers` and `punters`~~
   * Still 14,111 players without positions
+
+## Known Issues (Backburner)
+
+* API does not account for players traded during a season (See the EDA workbook for more clear examples)
+
+## Potential Future (lofty) Goals
+
+* Get weather report as function for upcoming games during season
+* Get coach dataframes and factor those into algorythim
+  * [Open Weather Map](https://openweathermap.org/history)
+  
+    > * Need to find a way to get start times of games, also end times of the games (BoxScore Dataframe has duration of game)
+    > * 
+
+* [ESPN API](http://www.espn.com/apis/devcenter/docs/) for things like images and rankings etc.
 
 ## Getting Player Dataframes
 
@@ -274,9 +291,3 @@ gnb_players = green_bay.players
 'AdamDa01': 'Davante Adams'
 ```
 
-## Potential Future (lofty) Goals
-
-* Get weather report as function for upcoming games during season
-* Get coach dataframes and factor those into algorythim
-  * [Open Weather Map](https://openweathermap.org/history)
-* [ESPN API](http://www.espn.com/apis/devcenter/docs/) for things like images and rankings etc.
