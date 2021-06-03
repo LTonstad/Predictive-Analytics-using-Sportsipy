@@ -90,6 +90,49 @@ def get_player_df(player):
     
     return seasons, career
 
+# For getting Boxscore data, converts date column to datetime and adds others for easy access
+
+months = {
+    'Jan': '01',
+    'Feb': '02',
+    'Mar': '03',
+    'Apr': '04',
+    'May': '05',
+    'Jun': '06',
+    'Jul': '07',
+    'Aug': '08',
+    'Sep': '09',
+    'Oct': '10',
+    'Nov': '11',
+    'Dec': '12',
+}
+
+def modify_dates(boxscores_df):
+    for idx, date in enumerate(boxscores_df['date']):
+        # Creating list of date information
+        date_lst = boxscores_df['date'][idx].split()
+
+        print(f'Day of week: {date_lst[0]}, Month: {date_lst[1]}, Day of Month: {date_lst[2][:-1]}, Year: {date_lst[3]}', '\n')
+
+        if len(str(date_lst[2][:-1])) == 1:
+            date = '0' + str(date_lst[2][:-1])
+        else:
+            date = str(date_lst[2][:-1])
+
+        if boxscores_df['time'][idx][-2:] == 'pm':
+            time = str(int(boxscores_df['time'][idx][:1]) + 12) + boxscores_df['time'][idx][2:-2]
+        else:
+            time = '0' + boxscores_df['time'][idx][:1] + boxscores_df['time'][idx][2:-2]
+
+        # Creating new columns
+        boxscores_df['day_of_week'][idx] = date_lst[0]
+        boxscores_df['month'][idx] = date_lst[1]
+        boxscores_df['day_of_month'][idx] = int(date)
+        boxscores_df['year'][idx] = int(date_lst[3])
+
+        boxscores_df['date'][idx] = str(date_lst[3]) + str(months[date_lst[1]]) + str(date) + time
+
+    return boxscores_df
 
 ''' # initialize a list of players that we have pulled data for
 players_collected = []
