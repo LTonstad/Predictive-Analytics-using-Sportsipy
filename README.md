@@ -15,11 +15,15 @@ Since this project is still in early stages this README is mostly just for notes
   * ~~Main issues include `kickers` and `punters`~~
   * Still 14,111 players without positions
 
+## Data Notes
+
+* Dates are all in `Eastern` time
+
 ## Known Issues (Backburner)
 
 * API does not account for players traded during a season (See the EDA workbook for more clear examples)
 
-## Potential Future (lofty) Goals
+## Future (lofty) Goals
 
 * Get weather report as function for upcoming games during season
 * Get coach dataframes and factor those into algorythim
@@ -165,64 +169,26 @@ yards_returned_from_interception
 * DataFrame Columns:
 
 ```
-attendance
-away_first_downs
-away_fourth_down_attempts
-away_fourth_down_conversions
-away_fumbles
-away_fumbles_lost
-away_interceptions
-away_net_pass_yards
-away_pass_attempts
-away_pass_completions
-away_pass_touchdowns
-away_pass_yards
-away_penalties
-away_points
-away_rush_attempts
-away_rush_touchdowns
-away_rush_yards
-away_third_down_attempts
-away_third_down_conversions
-away_time_of_possession
-away_times_sacked
-away_total_yards
-away_turnovers
-away_yards_from_penalties
-away_yards_lost_from_sacks
-date
-duration
-home_first_downs
-home_fourth_down_attempts
-home_fourth_down_conversions
-home_fumbles
-home_fumbles_lost
-home_interceptions
-home_net_pass_yards
-home_pass_attempts
-home_pass_completions
-home_pass_touchdowns
-home_pass_yards
-home_penalties
-home_points
-home_rush_attempts
-home_rush_touchdowns
-home_rush_yards
-home_third_down_attempts
-home_third_down_conversions
-home_time_of_possession
-home_times_sacked
-home_total_yards
-home_turnovers
-home_yards_from_penalties
-home_yards_lost_from_sacks
-losing_abbr
-losing_name
-stadium
-time
-winner
-winning_abbr
-winning_name
+['attendance', 'away_first_downs', 'away_fourth_down_attempts',
+'away_fourth_down_conversions', 'away_fumbles', 'away_fumbles_lost',
+'away_interceptions', 'away_net_pass_yards', 'away_pass_attempts',
+'away_pass_completions', 'away_pass_touchdowns', 'away_pass_yards',
+'away_penalties', 'away_points', 'away_rush_attempts',
+'away_rush_touchdowns', 'away_rush_yards', 'away_third_down_attempts',
+'away_third_down_conversions', 'away_time_of_possession',
+'away_times_sacked', 'away_total_yards', 'away_turnovers',
+'away_yards_from_penalties', 'away_yards_lost_from_sacks', 'date',
+'duration', 'home_first_downs', 'home_fourth_down_attempts',
+'home_fourth_down_conversions', 'home_fumbles', 'home_fumbles_lost',
+'home_interceptions', 'home_net_pass_yards', 'home_pass_attempts',
+'home_pass_completions', 'home_pass_touchdowns', 'home_pass_yards',
+'home_penalties', 'home_points', 'home_rush_attempts',
+'home_rush_touchdowns', 'home_rush_yards', 'home_third_down_attempts',
+'home_third_down_conversions', 'home_time_of_possession',
+'home_times_sacked', 'home_total_yards', 'home_turnovers',
+'home_yards_from_penalties', 'home_yards_lost_from_sacks',
+'losing_abbr', 'losing_name', 'stadium', 'time', 'winner',
+'winning_abbr', 'winning_name']
 ```
 
 ## Schedule Information
