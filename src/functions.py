@@ -7,6 +7,7 @@ from sportsreference.nfl.roster import Player, Roster
 from sportsreference.nfl.schedule import Schedule
 from sportsreference.nfl.teams import Teams
 
+import seaborn as sn
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 

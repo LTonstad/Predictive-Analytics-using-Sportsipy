@@ -33,6 +33,7 @@ Since this project is still in early stages this README is mostly just for notes
     > * 
 
 * [ESPN API](http://www.espn.com/apis/devcenter/docs/) for things like images and rankings etc.
+  * Could possibly get from Reddit API
 
 ## Getting Player Dataframes
 
