@@ -1,6 +1,10 @@
 # Fantasy Football project using [Sports Reference API](https://pypi.org/project/sportsreference/)
 
-Since this project is still in early stages this README is mostly just for notes of my own
+Since this project is still in early stages this README is mostly just for notes of my own at the moment
+
+## Helpful Links
+
+* [Pro Football Reference Glossary](https://www.pro-football-reference.com/about/glossary.htm)
 
 ## Current Objectives
 
@@ -22,6 +26,7 @@ Since this project is still in early stages this README is mostly just for notes
 ## Known Issues (Backburner)
 
 * API does not account for players traded during a season (See the EDA workbook for more clear examples)
+  * Correcting the `age` column for this by using the [.fillna](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html) method in Pandas, this works because the row above has their age at the beginning of that season.
 
 ## Future (lofty) Goals
 
@@ -42,66 +47,69 @@ Since this project is still in early stages this README is mostly just for notes
   > * Figure out a way to identify if player is starter, 2nd string etc.
   > * Figure out a way to project injury proneness
   > * Create offensive/defensive player column
+  > * Players `height` may want to be in inches, then have function to convert back for visibility
 
 * Player Columns:
 
-```
-adjusted_net_yards_per_attempt_index
+Columns `highlighted` below are read in as `float64` datatypes but to be switched to `int64` (Will modify `get_data.py` after filling `NaN` values with 0 and changing dtypes to `int64`)
+**Bold** columns are in the index of DataFrame
+
+`adjusted_net_yards_per_attempt_index` 6
 adjusted_net_yards_per_pass_attempt
 adjusted_yards_per_attempt
-adjusted_yards_per_attempt_index
-all_purpose_yards
-approximate_value
-assists_on_tackles
-attempted_passes
+`adjusted_yards_per_attempt_index` 9
+`all_purpose_yards` 10
+`approximate_value` 11
+`assists_on_tackles` 12
+`attempted_passes` 13
 birth_date
-blocked_punts
+`blocked_punts` 15
 catch_percentage
-completed_passes
-completion_percentage_index
+`completed_passes` 17
+`completion_percentage_index` 18
 espn_qbr
 extra_point_percentage
-extra_points_attempted
-extra_points_made
+`extra_points_attempted` 21
+`extra_points_made` 22
 field_goal_percentage
 field_goals_attempted
-field_goals_made
-fifty_plus_yard_field_goal_attempts
-fifty_plus_yard_field_goals_made
-fourth_quarter_comebacks
-fourty_to_fourty_nine_yard_field_goal_attempts
-fourty_to_fourty_nine_yard_field_goals_made
-fumbles
-fumbles_forced
-fumbles_recovered
-fumbles_recovered_for_touchdown
-game_winning_drives
-games
-games_started
+`field_goals_made` 25
+`fifty_plus_yard_field_goal_attempts` 26
+`fifty_plus_yard_field_goals_made` 27
+`fourth_quarter_comebacks` 28
+`fourty_to_fourty_nine_yard_field_goal_attempts` 29
+`fourty_to_fourty_nine_yard_field_goals_made` 30
+`fumbles` 31
+`fumbles_forced` 32
+`fumbles_recovered` 33
+`fumbles_recovered_for_touchdown` 34    This column is messed up...Renamed to `fumbles_return_yards`
+`game_winning_drives` 35
+`games` 36
+`games_started`
 height
 interception_percentage
-interception_percentage_index
-interceptions
-interceptions_returned_for_touchdown
-interceptions_thrown
-kickoff_return_touchdown
-kickoff_return_yards
-kickoff_returns
-less_than_nineteen_yards_field_goal_attempts
-less_than_nineteen_yards_field_goals_made
-longest_field_goal_made
-longest_interception_return
-longest_kickoff_return
-longest_pass
-longest_punt
-longest_punt_return
-longest_reception
-longest_rush
-name
-net_yards_per_attempt_index
+`interception_percentage_index` 40 [See PFR''s Glossary](https://www.pro-football-reference.com/about/glossary.htm), essentially 100 is average, above is better & below is worse
+`interceptions` 41 
+`interceptions_returned_for_touchdown` 42
+`interceptions_thrown` 43
+`kickoff_return_touchdown` 44
+`kickoff_return_yards` 45
+`kickoff_returns` 46
+`less_than_nineteen_yards_field_goal_attempts` 47
+`less_than_nineteen_yards_field_goals_made` 48
+`longest_field_goal_made` 49
+`longest_interception_return` 50
+`longest_kickoff_return` 51
+`longest_pass` 52
+`longest_punt` 53
+`longest_punt_return` 54
+`longest_reception` 55
+`longest_rush` 56
+**name**
+`net_yards_per_attempt_index` 57
 net_yards_per_pass_attempt
-passer_rating_index
-passes_defended
+`passer_rating_index` 59
+`passes_defended` 60
 passing_completion
 passing_touchdown_percentage
 passing_touchdowns
@@ -156,7 +164,7 @@ yards_per_punt_return
 yards_per_touch
 yards_recovered_from_fumble
 yards_returned_from_interception
-```
+
 
 ## Getting Game Boxscore information
 

@@ -4,7 +4,7 @@ boxscores_df_init = 0
 boxscores_df = 0
 
 # iterate through years.
-for year in range(2020, 2009, -1):
+for year in range(2009, 1999, -1):
     print('\n', str(year))
         
     # iterate through all teams in that year.
@@ -25,7 +25,7 @@ for year in range(2020, 2009, -1):
 
 print('Got all my things :)')
 
-boxscores_df.to_pickle('../data/boxscores_df.pkl')
+boxscores_df.to_pickle('../data/early_2000s_boxscores_df.pkl')
 
 print('Saved without DateTiming')
 
@@ -40,6 +40,6 @@ boxscores_df = modify_dates(boxscores_df)
 boxscores_df = boxscores_df.set_index(['date', 'losing_abbr', 'losing_name', 'stadium', 'time', 'winner',
 'winning_abbr', 'winning_name', 'day_of_week', 'month'])
 
-boxscores_df.to_pickle('../data/boxscores_df.pkl')
+boxscores_df.to_pickle('../data/early_2000s_boxscores_df.pkl')
 
 print('Saved with DateTiming')
