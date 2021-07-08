@@ -134,62 +134,43 @@ def modify_dates(boxscores_df):
 
     return boxscores_df
 
-''' # initialize a list of players that we have pulled data for
-players_collected = []
-season_df_init = 0
-career_df_init = 0
-season_df = 0
-career_df = 0 
-empty_player_df = []
 
-# iterate through years.
-for year in range(2020, 1999, -1):
-    print('\n' + str(year))
-        
-    # iterate through all teams in that year.
-    for team in Teams(year = str(year)).dataframes.index:
-        print('\n' + team + '\n')
-        
-        # iterate through every player on a team roster.
-        for player_id in Roster(team, year = year,
-                         slim = True).players.keys():
-            
-            # only pull player info if that player hasn't
-            # been pulled already.
-            if player_id not in players_collected:
-                
-                player = Player(player_id)
 
-                # Check to verify that the DataFrame exists, else move to next player
-                if player.dataframe is None:
-                    empty_player_df.append(player_id)
-                    continue
+# Function to get player stats from individual games using the string of the boxscore uri
+def get_player_game_boxscore(game_uris):
+    for uri in game_uris:
+        # Getting game boxscore
+        boxscore = Boxscore(uri)
+        df_box = boxscore.dataframe
 
-                # Getting season & career dataframes
-                player_seasons, player_career = get_player_df(player)
-                
-                # create season_df if not initialized
-                if not season_df_init:
-                    season_df = player_seasons
-                    season_df_init = 1
-                
-                # else concatenate to season_df
-                else:
-                    season_df = pd.concat([season_df,
-                                   player_seasons], axis = 0)
-                    
-                if not career_df_init:
-                    career_df = player_career
-                    career_df_init = 1
-                
-                # else concatenate to career_df
-                else:
-                    career_df = pd.concat([career_df,
-                                   player_career], axis = 0)
-                
-                # add player to players_collected
-                players_collected.append(player_id)
-                print(player.name)
+        # Getting home player boxscores
+        home_df = boxscore.home_players[0].dataframe
 
-season_df.to_pickle('../data/nfl_player_stats_by_season.pkl')
-career_df.to_pickle('../data/nfl_player_stats_by_career.pkl') '''
+        for player in boxscore.home_players[1:]:
+            home_df = pd.concat([home_df, player.dataframe], axis=0)
+
+        home_df['away_abbreviation'] = boxscore.home_abbreviation.upper()
+        home_df['game_uri'] = df_box.index[0]
+        home_df['name'] = [x.name for x in boxscore.home_players]
+
+        home_df.set_index(['game_uri', 'away_abbreviation', 'name'], inplace=True)
+
+        # Getting away player boxscore
+        away_df = boxscore.away_players[0].dataframe
+
+        for player in boxscore.away_players[1:]:
+            away_df = pd.concat([away_df, player.dataframe], axis=0)
+
+        away_df['away_abbreviation'] = boxscore.away_abbreviation.upper()
+        away_df['game_uri'] = df_box.index[0]
+        away_df['name'] = [x.name for x in boxscore.away_players]
+
+        away_df.set_index(['game_uri', 'away_abbreviation', 'name'], inplace=True)
+
+        # Combining two dataframes
+        game_df = pd.concat([home_df, away_df], axis=0)
+
+        try:
+            final_df = pd.concat([final_df, game_df], axis=0)
+        except:
+            final_df = game_df.copy()
