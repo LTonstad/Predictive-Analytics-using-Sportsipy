@@ -142,7 +142,9 @@ def get_player_game_boxscore(game_uris):
         # Getting game boxscore
         boxscore = Boxscore(uri)
         df_box = boxscore.dataframe
-
+        
+        print(f'Getting info for {df_box.index[0]}', '\n')
+        
         # Getting home player boxscores
         home_df = boxscore.home_players[0].dataframe
 
@@ -152,8 +154,9 @@ def get_player_game_boxscore(game_uris):
         home_df['away_abbreviation'] = boxscore.home_abbreviation.upper()
         home_df['game_uri'] = df_box.index[0]
         home_df['name'] = [x.name for x in boxscore.home_players]
+        home_df['year'] = df_box.index[0][:4]
 
-        home_df.set_index(['game_uri', 'away_abbreviation', 'name'], inplace=True)
+        home_df.set_index(['year', 'game_uri', 'away_abbreviation', 'name'], inplace=True)
 
         # Getting away player boxscore
         away_df = boxscore.away_players[0].dataframe
@@ -164,13 +167,18 @@ def get_player_game_boxscore(game_uris):
         away_df['away_abbreviation'] = boxscore.away_abbreviation.upper()
         away_df['game_uri'] = df_box.index[0]
         away_df['name'] = [x.name for x in boxscore.away_players]
+        away_df['year'] = df_box.index[0][:4]
 
-        away_df.set_index(['game_uri', 'away_abbreviation', 'name'], inplace=True)
+        away_df.set_index(['year', 'game_uri', 'away_abbreviation', 'name'], inplace=True)
 
         # Combining two dataframes
         game_df = pd.concat([home_df, away_df], axis=0)
 
         try:
             final_df = pd.concat([final_df, game_df], axis=0)
+            print('\n', f'Gots final_df already, appending {df_box.index[0]}. SMOOCHES :*', '\n')
         except:
             final_df = game_df.copy()
+            print('\n', f'No final_df yet, creating from {df_box.index[0]}', '\n')
+    
+    return final_df
