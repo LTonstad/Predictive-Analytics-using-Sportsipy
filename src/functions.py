@@ -179,6 +179,35 @@ def get_player_game_boxscore(game_uris):
     
     return final_df
 
+# Getting each teams season stats into Pandas DataFrame
+def get_team_season_stats(start_year, end_year):
+    for i in range(start_year, end_year):
+        
+        teams = Teams(i).dataframes
+            
+        try:
+            teams['year'] = int(i)
+            final_df = pd.concat([final_df, teams], axis=0)
+            print('\n', f'Gots final_df already, appending year: {i}. SMOOCHES :*', '\n')
+        except:
+            teams['year'] = int(i)
+            final_df = teams.copy()
+            print('\n', f'No final_df yet, creating from year: {i}', '\n')
+
+    # Adding coach to rows
+    final_df['coach'] = ''
+
+    for i in range(final_df.shape[0]):
+        coach = Roster(final_df['abbreviation'][i], final_df['year'][i]).coach
+        print(f"Got coach {coach} from year: {final_df['year'][i]}")
+        final_df['coach'][i] = coach
+
+    # Adding column stating how many coaches the team had throughout the season
+    final_df['coaches_through_season'] = final_df['coach'].str.split()
+    final_df['coaches_through_season'] = final_df['coaches_through_season'].str.len() // 2
+    
+    return final_df
+
 # For getting Boxscore data, converts date column to datetime and adds others for easy access
 
 months = {
