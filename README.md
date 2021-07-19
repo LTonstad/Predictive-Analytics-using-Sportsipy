@@ -6,6 +6,7 @@ Since this project is still in early stages this README is mostly just for notes
 
 * [Pro Football Reference Glossary](https://www.pro-football-reference.com/about/glossary.htm)
 * [Sportsipy](https://github.com/roclark/sportsipy)
+* [NFL Stadiums/Teams dataset](https://www.kaggle.com/tobycrabtree/nfl-scores-and-betting-data)
 
 ## Current Objectives
 
