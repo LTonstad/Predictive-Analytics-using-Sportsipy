@@ -25,8 +25,8 @@ if st.checkbox('Show raw data'):
     st.write(df)
 
 st.subheader('Total minus over/under')
-hist_values = np.histogram(df[['total_minus_over', 'year']], bins=50)
-st.line_chart(hist_values)
+hist_values = np.histogram(df[['total_minus_over']], bins=50)
+st.bar_chart(hist_values)
 
 # year_to_filter = st.slider('year', 2000, 2021)
 # filtered
